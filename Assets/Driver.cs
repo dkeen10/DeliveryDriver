@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Driver : MonoBehaviour
 {
+
+    [SerializeField] private float steerSpeed = 0.1f;
+    [SerializeField] private float moveSpeed = 0.15f;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -11,8 +15,11 @@ public class Driver : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        transform.Rotate(0, 0, 0.1f);
-        transform.Translate(0, 0, 0.1f);
+    {   
+        // Time.delta normalizes the speed of the car to the frame rate
+        float steerAmount = Input.GetAxis("Horizontal") *  steerSpeed * Time.deltaTime;
+        float moveAmount = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        transform.Rotate(0, 0, -steerAmount);
+        transform.Translate(0, moveAmount, 0);
     }
 }
